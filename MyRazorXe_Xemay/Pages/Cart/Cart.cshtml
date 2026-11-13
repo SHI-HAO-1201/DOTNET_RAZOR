@@ -1,0 +1,67 @@
+@page "/Cart"
+
+@{
+    ViewData["Title"] = "Giỏ hàng";
+}
+
+<section class="page-banner">
+    <span class="section-label">YOUR RIDING SELECTION</span>
+    <h1>GIỎ HÀNG</h1>
+    <p>Quản lý những mẫu mô tô bạn đang quan tâm.</p>
+</section>
+
+<section class="section cart-page-content">
+
+    <div class="cart-main">
+        <div class="section-heading">
+            <div>
+                <span class="section-label">YOUR COLLECTION</span>
+                <h2>MẪU XE <i>ĐÃ CHỌN</i></h2>
+            </div>
+        </div>
+
+        <div id="cartItems" class="cart-items">
+            <div class="cart-empty">
+                <span class="cart-empty-icon">◇</span>
+                <h3>GIỎ HÀNG ĐANG TRỐNG</h3>
+                <p>
+                    Bạn chưa chọn mẫu mô tô nào.
+                    Hãy khám phá bộ sưu tập của MOTOHUB.
+                </p>
+
+                <a asp-page="/Collection/Collection" class="btn-gold">
+                    KHÁM PHÁ BỘ SƯU TẬP
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <aside class="cart-summary">
+        <span class="section-label">ORDER SUMMARY</span>
+        <h2>TỔNG ĐƠN HÀNG</h2>
+
+        <div class="cart-summary-row">
+            <span>Số lượng sản phẩm</span>
+            <strong id="cartQuantity">0</strong>
+        </div>
+
+        <div class="cart-total-row">
+            <span>Tạm tính</span>
+            <strong id="cartTotal">0 ₫</strong>
+        </div>
+
+        <p class="cart-note">
+            Giá trị đơn hàng sẽ được xác nhận
+            trước khi hoàn tất giao dịch.
+        </p>
+
+        <button id="checkout" class="btn-gold" type="button">
+            TIẾN HÀNH THANH TOÁN
+        </button>
+
+        <a asp-page="/Collection/Collection" class="continue-shopping">
+            ← TIẾP TỤC KHÁM PHÁ
+        </a>
+    </aside>
+
+</section>

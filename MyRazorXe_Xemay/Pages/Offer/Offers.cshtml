@@ -1,0 +1,94 @@
+@page "/Offers"
+@model MyRazorXe_Xemay.Pages.Offer.OffersModel
+
+@{
+    ViewData["Title"] = "Chương trình ưu đãi";
+}
+
+<section class="page-banner">
+    <span class="section-label">EXCLUSIVE PRIVILEGES</span>
+    <h1>ĐẶC QUYỀN MOTOHUB</h1>
+    <p>
+        Khám phá các chương trình ưu đãi và quyền lợi
+        dành cho khách hàng MOTOHUB.
+    </p>
+</section>
+
+<section class="section offers-section">
+
+    <div class="section-heading">
+        <div>
+            <span class="section-label">CURRENT PROMOTIONS</span>
+            <h2>ƯU ĐÃI <i>DÀNH CHO BẠN</i></h2>
+            <p>
+                Những chương trình và dịch vụ được áp dụng
+                theo chính sách của MOTOHUB.
+            </p>
+        </div>
+    </div>
+
+    <div class="offer-grid">
+
+        @if (Model.Promotions.Count == 0)
+        {
+            <article class="offer-card">
+                <span class="section-label">CURRENT PROMOTIONS</span>
+                <h2>ƯU ĐÃI <i>SẮP CÓ</i></h2>
+                <h3>Chưa có mã khuyến mãi đang áp dụng</h3>
+                <p>Vui lòng quay lại sau để xem các chương trình mới từ MOTOHUB.</p>
+            </article>
+        }
+        else
+        {
+            @foreach (var promotion in Model.Promotions)
+            {
+                <article class="offer-card">
+                    <span class="section-label">ƯU ĐÃI MOTOHUB</span>
+                    <h2>GIẢM <i>@promotion.DiscountAmount.ToString("N0") ₫</i></h2>
+                    <h3>@promotion.Name</h3>
+                    <p>@promotion.Description</p>
+                    <div class="voucher-code">@promotion.Code</div>
+                    <button class="btn-gold copy-voucher" type="button" data-code="@promotion.Code">SAO CHÉP MÃ ƯU ĐÃI</button>
+                </article>
+            }
+        }
+
+
+        <article class="offer-card">
+            <span class="section-label">PREMIUM SERVICE</span>
+
+            <h2>CARE <i>&</i> SERVICE</h2>
+
+            <h3>CHĂM SÓC XE CHUYÊN NGHIỆP</h3>
+
+            <p>
+                Tìm hiểu các chương trình chăm sóc,
+                kiểm tra và hỗ trợ kỹ thuật dành cho khách hàng.
+            </p>
+
+            <a asp-page="/Contact/Contact" class="btn-gold">
+                NHẬN TƯ VẤN
+            </a>
+        </article>
+
+
+        <article class="offer-card">
+            <span class="section-label">MOTOHUB MEMBER</span>
+
+            <h2>MEMBER <i>PRIVILEGES</i></h2>
+
+            <h3>QUYỀN LỢI THÀNH VIÊN</h3>
+
+            <p>
+                Đăng ký tài khoản để cập nhật thông tin
+                và các chương trình dành cho thành viên.
+            </p>
+
+            <a asp-page="/Account/Register" class="btn-gold">
+                TRỞ THÀNH THÀNH VIÊN
+            </a>
+        </article>
+
+    </div>
+
+</section>

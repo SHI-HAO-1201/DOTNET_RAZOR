@@ -1,0 +1,66 @@
+@page "/Admin"
+@model MyRazorXe_Xemay.Pages.Admin.AdminModel
+@{
+    ViewData["Title"] = "Quản trị MOTOHUB";
+}
+
+<link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
+<section class="admin-shell" aria-label="Khu vực quản trị">
+    <aside class="admin-sidebar">
+        <a href="/" class="admin-brand">MOTO<span>HUB</span><small>TRUNG TÂM QUẢN TRỊ</small></a>
+        <nav class="admin-nav" aria-label="Điều hướng quản trị">
+            <button class="active" data-panel="tong-quan">▦ <span>Tổng quan</span></button>
+            <button data-panel="san-pham">◇ <span>Sản phẩm</span></button>
+            <button data-panel="don-hang">▤ <span>Đơn hàng</span></button>
+            <button data-panel="khach-hang">♙ <span>Khách hàng</span></button>
+            <button data-panel="uu-dai">✦ <span>Ưu đãi</span></button>
+            <button data-panel="noi-dung">▧ <span>Nội dung</span></button>
+            <button data-panel="bao-cao">◷ <span>Báo cáo</span></button>
+            <button data-panel="cai-dat">⚙ <span>Cài đặt</span></button>
+        </nav>
+        <a class="admin-back" href="/">← Về trang cửa hàng</a>
+    </aside>
+
+    <div class="admin-main">
+        <header class="admin-topbar"><div><span class="admin-kicker">MOTOHUB / QUẢN TRỊ</span><h1 id="adminHeading">Tổng quan</h1></div><div class="admin-user"><span class="admin-avatar">Q</span><span>Quản trị viên<small>Quản lý cửa hàng</small></span></div></header>
+        <main class="admin-content">
+            <section class="admin-panel active" id="panel-tong-quan">
+                <div class="admin-welcome"><div><span id="adminToday"></span><h2>Chào mừng trở lại</h2><p>Theo dõi hoạt động cửa hàng của bạn tại đây.</p></div><button class="admin-primary" data-open-product>＋ Thêm sản phẩm</button></div>
+                <div class="admin-stats"><article><span>DOANH THU ĐƠN HÀNG</span><strong id="revenueStat">0 ₫</strong><small>Đơn hàng đã ghi nhận</small></article><article><span>ĐƠN HÀNG</span><strong id="orderStat">@Model.OrderCount</strong><small>Đang theo dõi</small></article><article><span>SẢN PHẨM</span><strong id="productStat">@Model.Products.Count</strong><small>Trong danh mục</small></article><article><span>KHÁCH HÀNG</span><strong id="customerStat">@Model.CustomerCount</strong><small>Đã đăng ký</small></article></div>
+                <div class="admin-columns"><section class="admin-card"><div class="admin-card-heading"><div><span>HOẠT ĐỘNG GẦN ĐÂY</span><h3>Đơn hàng mới nhất</h3></div><button class="admin-text-button" data-goto="don-hang">Xem danh sách →</button></div><div id="recentOrders"></div></section><section class="admin-card"><div class="admin-card-heading"><div><span>TRUY CẬP NHANH</span><h3>Thao tác quản lý</h3></div></div><div class="admin-shortcuts"><button data-open-product>＋ Thêm sản phẩm</button><button data-goto="don-hang">▤ Quản lý đơn hàng</button><button data-goto="uu-dai">✦ Cập nhật ưu đãi</button><button data-goto="bao-cao">◷ Xem báo cáo</button></div></section></div>
+            </section>
+            <section class="admin-panel" id="panel-san-pham"><div class="admin-toolbar"><label class="admin-search"><span>⌕</span><input id="productSearch" type="search" placeholder="Tìm tên sản phẩm..." /></label><button class="admin-secondary" id="exportProducts">Tải danh sách CSV</button><button class="admin-primary" data-open-product>＋ Thêm sản phẩm</button></div><section class="admin-card"><div class="admin-card-heading"><div><span>QUẢN LÝ DANH MỤC</span><h3>Danh sách sản phẩm</h3></div></div><div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>SẢN PHẨM</th><th>PHÂN LOẠI</th><th>GIÁ BÁN</th><th>TỒN KHO</th><th>TRẠNG THÁI</th><th></th></tr></thead><tbody id="productRows">
+                @foreach (var product in Model.Products)
+                {
+                    <tr data-search="@product.Name.ToLowerInvariant()"><td><strong>@product.Name</strong><small>@product.Brand · @product.Code</small></td><td>@product.Type</td><td>@product.Price.ToString("N0", System.Globalization.CultureInfo.GetCultureInfo("vi-VN")) ₫</td><td>@product.StockQuantity</td><td><span class="admin-status @(product.IsActive ? "is-active" : "is-off")">@(product.IsActive ? "Đang bán" : "Đã ẩn")</span></td><td class="admin-row-actions"><button data-edit="@product.Id">Sửa</button><button data-toggle-product="@product.Id" data-active="@product.IsActive">@(product.IsActive ? "Ẩn" : "Hiện")</button></td></tr>
+                }
+                @if (Model.Products.Count == 0)
+                {
+                    <tr><td colspan="6" class="admin-empty">Chưa có sản phẩm nào.</td></tr>
+                }
+            </tbody></table></div></section></section>
+            <section class="admin-panel" id="panel-don-hang"><div class="admin-toolbar"><label class="admin-search"><span>⌕</span><input id="orderSearch" type="search" placeholder="Tìm mã đơn hoặc khách hàng..." /></label><select id="orderFilter"><option value="all">Tất cả trạng thái</option><option value="Pending">Chờ xác nhận</option><option value="Processing">Đang xử lý</option><option value="Shipping">Đang giao</option><option value="Completed">Hoàn tất</option><option value="Cancelled">Đã hủy</option></select></div><section class="admin-card"><div class="admin-card-heading"><div><span>QUẢN LÝ BÁN HÀNG</span><h3>Danh sách đơn hàng</h3></div></div><div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>MÃ ĐƠN</th><th>KHÁCH HÀNG</th><th>NGÀY ĐẶT</th><th>TỔNG TIỀN</th><th>TRẠNG THÁI</th><th></th></tr></thead><tbody id="orderRows"></tbody></table></div></section></section>
+            <section class="admin-panel" id="panel-khach-hang"><div class="admin-toolbar"><h2>Khách hàng</h2><button class="admin-primary" id="addCustomer">＋ Thêm khách hàng</button></div><section class="admin-card"><div class="admin-card-heading"><div><span>QUAN HỆ KHÁCH HÀNG</span><h3>Danh sách khách hàng</h3></div></div><div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>KHÁCH HÀNG</th><th>EMAIL</th><th>SỐ ĐIỆN THOẠI</th><th>SỐ ĐƠN</th><th>TỔNG CHI TIÊU</th><th></th></tr></thead><tbody id="customerRows"></tbody></table></div></section></section>
+            <section class="admin-panel" id="panel-uu-dai"><div class="admin-toolbar"><h2>Mã ưu đãi</h2><button class="admin-primary" id="addOffer">＋ Tạo ưu đãi</button></div><div class="admin-offer-grid" id="offerCards"></div></section>
+            <section class="admin-panel" id="panel-noi-dung"><section class="admin-card admin-settings-card"><span>QUẢN LÝ TRANG CỬA HÀNG</span><h3>Nội dung hiển thị</h3><p>Cập nhật thông tin thương hiệu và thông báo trên trang chủ.</p><label>Tên thương hiệu<input id="brandName" value="MOTOHUB" /></label><label>Thông điệp trang chủ<input id="homeMessage" value="Nghệ thuật tốc độ — Bản lĩnh người lái" /></label><button class="admin-primary" id="saveContent">Lưu nội dung</button></section></section>
+            <section class="admin-panel" id="panel-bao-cao"><div class="admin-stats"><article><span>TỔNG DOANH THU</span><strong id="reportRevenue">0 ₫</strong><small>Tính từ đơn hàng hoàn tất</small></article><article><span>ĐƠN HOÀN TẤT</span><strong id="reportComplete">0</strong><small>Đơn đã giao</small></article><article><span>GIÁ TRỊ TRUNG BÌNH</span><strong id="reportAverage">0 ₫</strong><small>Trên mỗi đơn</small></article></div><section class="admin-card"><div class="admin-card-heading"><div><span>THỐNG KÊ CỬA HÀNG</span><h3>Tổng hợp hoạt động</h3></div><button class="admin-secondary" id="exportReport">Tải báo cáo CSV</button></div><p class="admin-report-note">Báo cáo được tổng hợp từ hoạt động của cửa hàng.</p></section></section>
+            <section class="admin-panel" id="panel-cai-dat"><section class="admin-card admin-settings-card"><span>THIẾT LẬP QUẢN TRỊ</span><h3>Cài đặt cửa hàng</h3><p>Cập nhật thông tin hiển thị và cách liên hệ với cửa hàng.</p><label>Địa chỉ email hỗ trợ<input id="settingEmail" value="" /></label><label>Hotline<input id="settingPhone" value="" /></label><label>Tiền tệ<select id="settingCurrency"><option>VND (₫)</option></select></label><button class="admin-primary" id="saveSettings">Lưu cài đặt</button></section></section>
+        </main>
+    </div>
+</section>
+
+<dialog class="admin-dialog" id="customerDialog"><form method="dialog" id="customerForm"><div class="admin-card-heading"><div><span>QUAN HỆ KHÁCH HÀNG</span><h3 id="customerDialogTitle">Thêm khách hàng</h3></div><button class="admin-close" value="cancel" formnovalidate aria-label="Đóng">×</button></div><input type="hidden" id="editingCustomerId" /><label>Họ và tên<input id="customerName" required maxlength="120" /></label><label>Email<input id="customerEmail" type="email" required maxlength="320" /></label><div class="admin-form-row"><label>Số điện thoại<input id="customerPhone" type="tel" required maxlength="30" /></label><label>Địa chỉ<input id="customerAddress" maxlength="240" /></label></div><div class="admin-dialog-actions"><button class="admin-secondary" value="cancel" formnovalidate>Hủy</button><button class="admin-primary" value="default">Lưu khách hàng</button></div></form></dialog>
+<dialog class="admin-dialog" id="productDialog">
+    <form method="dialog" id="productForm">
+        <div class="admin-card-heading"><div><span>QUẢN LÝ DANH MỤC</span><h3 id="productDialogTitle">Thêm sản phẩm</h3></div><button class="admin-close" value="cancel" formnovalidate aria-label="Đóng">×</button></div>
+        <input type="hidden" id="editingProductId" />
+        <label>Tên xe<input id="productName" required maxlength="160" placeholder="Ví dụ: Honda Vision" /></label>
+        <div class="admin-form-row"><label>Hãng xe<input id="productBrand" required maxlength="80" placeholder="Honda" /></label><label>Mã xe<input id="productCode" required maxlength="32" placeholder="HON-VISION" /></label></div>
+        <label>Đường dẫn ảnh <span class="admin-optional">Không bắt buộc</span><input id="productImage" maxlength="1000" type="text" placeholder="Dán liên kết ảnh hoặc để trống" /></label>
+        <label>Mô tả xe<textarea id="productEngine" maxlength="4000" rows="4"></textarea></label>
+        <div class="admin-form-row"><label>Phân loại<select id="productCategory"><option>Siêu mô tô thể thao</option><option>Xe mô tô đường phố</option><option>Xe mô tô đường trường</option></select></label><label>Giá bán (₫)<input id="productPrice" type="number" min="0" required /></label></div>
+        <label>Số lượng tồn kho<input id="productStock" type="number" min="0" required /></label>
+        <div class="admin-dialog-actions"><button class="admin-secondary" value="cancel" formnovalidate>Hủy</button><button class="admin-primary" id="saveProduct" value="default">Lưu sản phẩm</button></div>
+    </form>
+</dialog>
+<script src="~/js/admin.js" asp-append-version="true"></script>

@@ -1,0 +1,63 @@
+@page "/Account/Login"
+@model MyRazorXe_Xemay.Pages.Account.LoginModel
+
+@{
+    ViewData["Title"] = "Đăng nhập";
+}
+
+<section class="account-page">
+    <div class="account-decoration">
+        <span class="section-label">THE SPIRIT OF RIDING</span>
+        <h2>WELCOME<br /><i>BACK.</i></h2>
+        <p>
+            Tiếp tục hành trình khám phá thế giới mô tô
+            cùng MOTOHUB.
+        </p>
+    </div>
+
+    <div class="login-box">
+        <span class="section-label">MEMBER ACCESS</span>
+
+        <h1>ĐĂNG NHẬP</h1>
+
+        <p class="account-description">
+            Đăng nhập để quản lý tài khoản và trải nghiệm
+            các dịch vụ dành riêng cho thành viên.
+        </p>
+
+        <form id="loginForm" method="post">
+            <input type="hidden" asp-for="ReturnUrl" />
+            <div asp-validation-summary="ModelOnly" class="validation-summary"></div>
+            @if (!string.IsNullOrWhiteSpace(Model.ErrorMessage))
+            {
+                <p class="form-error" role="alert">@Model.ErrorMessage</p>
+            }
+            <div class="form-group">
+                <label for="email">Địa chỉ email</label>
+                <input id="email"
+                       name="Email"
+                       type="email"
+                       placeholder="Nhập địa chỉ email"
+                       autocomplete="email"
+                       required />
+            </div>
+
+            <div class="form-group">
+                <label for="password">Mật khẩu</label>
+                <div class="password-field"><input id="password" name="Password" type="password" placeholder="Nhập mật khẩu" autocomplete="current-password" required /><button class="password-toggle" type="button" data-password-toggle="#password" aria-label="Hi&#7879;n m&#7853;t kh&#7849;u">Hi&#7879;n</button></div>
+                <a asp-page="/Account/ForgotPassword" class="forgot-password-link">Quên mật khẩu?</a>
+            </div>
+
+            <button type="submit" class="btn-gold">
+                ĐĂNG NHẬP TÀI KHOẢN
+            </button>
+        </form>
+
+        <p class="account-switch">
+            Bạn chưa có tài khoản?
+            <a asp-page="/Account/Register">Đăng ký thành viên</a>
+        </p>
+
+        <a href="/" class="back-home">← QUAY VỀ TRANG CHỦ</a>
+    </div>
+</section>

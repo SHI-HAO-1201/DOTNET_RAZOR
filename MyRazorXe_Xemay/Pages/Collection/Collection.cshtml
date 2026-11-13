@@ -1,0 +1,70 @@
+@page "/Collection"
+@model MyRazorXe_Xemay.Pages.Collection.CollectionModel
+@{
+    ViewData["Title"] = "Bộ sưu tập mô tô";
+}
+
+<section class="page-banner">
+    <span class="section-label">BỘ SƯU TẬP MOTOSPEED</span>
+    <h1>CHỌN CHIẾC XE <i>CỦA BẠN</i></h1>
+    <p>Khám phá những mẫu mô tô nổi bật, nơi công nghệ và đam mê tốc độ hội tụ.</p>
+</section>
+
+<section class="section collection-section">
+    <div class="section-heading">
+        <div>
+            <span class="section-label">@(Model.Motorcycles.Count) MẪU XE</span>
+            <h2>Khám phá <i>bản lĩnh tốc độ</i></h2>
+            <p>Dữ liệu xe được cập nhật trực tiếp từ MotoSpeedDb.</p>
+        </div>
+    </div>
+
+    <div class="collection-toolbar">
+        <input type="search" id="searchInput" placeholder="Tìm theo tên mẫu xe..." aria-label="Tìm kiếm mẫu xe" />
+        <select id="sortPrice" aria-label="Sắp xếp theo giá">
+            <option value="default">Sắp xếp mặc định</option>
+            <option value="asc">Giá từ thấp đến cao</option>
+            <option value="desc">Giá từ cao đến thấp</option>
+        </select>
+    </div>
+
+    <div class="products" id="productList">
+        @foreach (var motorcycle in Model.Motorcycles)
+        {
+            <article class="product-card" data-name="@motorcycle.Name" data-category="@motorcycle.Type.ToLowerInvariant()" data-price="@motorcycle.Price">
+                <div class="product-image">
+                    <span class="product-badge">@motorcycle.Type</span>
+                    <img src="@CollectionModel.ImageUrl(motorcycle.Image)" alt="@motorcycle.Name" loading="lazy" />
+                </div>
+                <div class="product-info">
+                    <small>@motorcycle.Brand · @motorcycle.Type</small>
+                    <h3>@motorcycle.Name</h3>
+                    <p>@motorcycle.Engine</p>
+                    <div class="product-footer">
+                        <strong>@motorcycle.Price.ToString("N0") ₫</strong>
+                        <a asp-page="/Contact/Contact" class="detail">TƯ VẤN →</a>
+                    </div>
+                    <button class="btn-gold add-cart" type="button"
+                            disabled="@(!motorcycle.CanBePurchased)"
+                            data-id="@motorcycle.Id"
+                            data-name="@motorcycle.Name"
+                            data-brand="@motorcycle.Brand"
+                            data-category="@motorcycle.Type"
+                            data-engine="@motorcycle.Engine"
+                            data-image="@CollectionModel.ImageUrl(motorcycle.Image)"
+                            data-price="@motorcycle.Price">
+                        @(motorcycle.CanBePurchased ? "Thêm vào giỏ" : "Đang nhập hàng")
+                    </button>
+                </div>
+            </article>
+        }
+    </div>
+
+    @if (Model.Motorcycles.Count == 0)
+    {
+        <p class="no-product">Hiện chưa có mẫu xe đang kinh doanh.</p>
+    }
+    <p id="noProduct" class="no-product" hidden>Không tìm thấy mẫu xe phù hợp.</p>
+</section>
+
+<script src="~/js/collection.js" asp-append-version="true"></script>
