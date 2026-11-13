@@ -1,0 +1,46 @@
+@page "/Account/Orders"
+@model MyRazorXe_Xemay.Pages.Account.OrdersModel
+@{
+    ViewData["Title"] = "Đơn hàng của tôi";
+}
+
+<section class="page-banner">
+    <span class="section-label">KHU VỰC CÁ NHÂN</span>
+    <h1>ĐƠN HÀNG <i>CỦA TÔI</i></h1>
+    <p>Theo dõi trạng thái và lịch sử mua xe của bạn.</p>
+</section>
+
+<section class="section account-orders">
+    @if (Model.Orders.Count == 0)
+    {
+        <div class="cart-empty">
+            <h2>Bạn chưa có đơn hàng nào</h2>
+            <p>Đơn hàng sẽ hiển thị tại đây sau khi bạn đặt xe.</p>
+            <a asp-page="/Collection/Collection" class="btn-gold">Khám phá bộ sưu tập</a>
+        </div>
+    }
+    else
+    {
+        @foreach (var order in Model.Orders)
+        {
+            <article class="order-history-card">
+                <header>
+                    <div><span>MÃ ĐƠN</span><strong>@order.OrderNumber</strong></div>
+                    <span class="order-history-status">@OrdersModel.StatusLabel(order.Status)</span>
+                </header>
+                <p>Đặt ngày @order.CreatedAtUtc.ToLocalTime().ToString("dd/MM/yyyy HH:mm") · @order.PaymentMethod</p>
+                <ul>
+                    @foreach (var item in order.Items)
+                    {
+                        <li><span>@item.MotorcycleName × @item.Quantity</span><strong>@((item.UnitPrice * item.Quantity).ToString("N0")) ₫</strong></li>
+                    }
+                </ul>
+                @if (order.DiscountAmount > 0)
+                {
+                    <p class="order-history-discount">Mã @order.PromotionCode · Giảm @order.DiscountAmount.ToString("N0") ₫</p>
+                }
+                <footer><span>Tổng thanh toán</span><strong>@order.TotalAmount.ToString("N0") ₫</strong></footer>
+            </article>
+        }
+    }
+</section>

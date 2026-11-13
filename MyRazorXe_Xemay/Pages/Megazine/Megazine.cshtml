@@ -1,0 +1,95 @@
+@page "/Magazine"
+
+@{
+    ViewData["Title"] = "Tạp chí mô tô";
+}
+
+<section class="page-banner">
+    <span class="section-label">MOTOHUB JOURNAL</span>
+    <h1>GÓC NHÌN TỐC ĐỘ</h1>
+    <p>
+        Cập nhật tin tức, kiến thức và những câu chuyện
+        truyền cảm hứng từ thế giới mô tô.
+    </p>
+</section>
+
+<section class="section magazine-page">
+
+    <div class="section-heading">
+        <div>
+            <span class="section-label">LATEST STORIES</span>
+            <h2>KHÁM PHÁ THẾ GIỚI <i>MÔ TÔ</i></h2>
+            <p>
+                Những nội dung dành cho người yêu công nghệ,
+                tốc độ và văn hóa mô tô.
+            </p>
+        </div>
+    </div>
+
+    <div class="magazine-grid">
+
+        <article>
+            <img src="https://images.unsplash.com/photo-1558981403-c5f9899a28bc?auto=format&amp;fit=crop&amp;w=900&amp;q=85"
+                 alt="Kinh nghiệm chọn mô tô phân khối lớn" />
+
+            <small>KIẾN THỨC · MÔ TÔ</small>
+
+            <h3>
+                Những điều cần biết trước khi chọn mua mô tô phân khối lớn
+            </h3>
+
+            <p>
+                Tìm hiểu các yếu tố quan trọng về phân khối,
+                thiết kế và mục đích sử dụng trước khi chọn xe.
+            </p>
+
+            <a asp-page="/Collection/Collection">
+                KHÁM PHÁ CÁC MẪU XE →
+            </a>
+        </article>
+
+
+        <article>
+            <img src="https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?auto=format&amp;fit=crop&amp;w=900&amp;q=85"
+                 alt="Đánh giá những mẫu Superbike" />
+
+            <small>ĐÁNH GIÁ · SUPERBIKE</small>
+
+            <h3>
+                Khám phá sức mạnh và công nghệ trên những mẫu Superbike
+            </h3>
+
+            <p>
+                Góc nhìn về hiệu suất vận hành, công nghệ
+                và thiết kế của những cỗ máy tốc độ.
+            </p>
+
+            <a asp-page="/Collection/Collection">
+                XEM BỘ SƯU TẬP →
+            </a>
+        </article>
+
+
+        <article>
+            <img src="https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&amp;fit=crop&amp;w=900&amp;q=85"
+                 alt="Văn hóa và phong cách biker" />
+
+            <small>PHONG CÁCH · BIKER</small>
+
+            <h3>
+                Đam mê tốc độ và tinh thần tự do trên mỗi hành trình
+            </h3>
+
+            <p>
+                Khám phá phong cách sống, tinh thần khám phá
+                và sự kết nối của cộng đồng biker.
+            </p>
+
+            <a asp-page="/Showroom/Showroom">
+                KHÁM PHÁ MOTOHUB →
+            </a>
+        </article>
+
+    </div>
+
+</section>

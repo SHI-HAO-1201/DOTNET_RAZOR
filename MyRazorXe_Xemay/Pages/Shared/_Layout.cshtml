@@ -1,0 +1,161 @@
+﻿@using Microsoft.EntityFrameworkCore
+@inject MyRazorXe_Xemay.Data.AppDbContext Database
+@{
+    var storeSettings = await Database.StoreSettings.AsNoTracking()
+        .ToDictionaryAsync(setting => setting.Key, setting => setting.Value);
+    var brandName = storeSettings.GetValueOrDefault("BrandName", "MOTOHUB");
+    var homeMessage = storeSettings.GetValueOrDefault("HomeMessage", "NGHỆ THUẬT TỐC ĐỘ — BẢN LĨNH NGƯỜI LÁI");
+    var supportPhone = storeSettings.GetValueOrDefault("SupportPhone", "1900 0000");
+    var supportEmail = storeSettings.GetValueOrDefault("SupportEmail", "support@motohub.vn");
+}
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>@ViewData["Title"] - MOTOHUB</title>
+
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Pages/Shared/_Layout.cshtml.css" asp-append-version="true" />
+</head>
+
+<body>
+
+    <!-- TOPBAR -->
+    <div class="topbar">
+        <p>@homeMessage</p>
+    </div>
+
+    <!-- HEADER -->
+    <header class="header">
+
+        <a href="/" class="logo">
+            @brandName
+        </a>
+
+        <button class="menu-toggle"
+                id="menuToggle"
+                aria-label="Mở menu">
+            ☰
+        </button>
+
+        <!-- NAVIGATION -->
+        <nav class="navigation" id="mainNavigation">
+            <a href="/">Trang chủ</a>
+
+            <a asp-page="/Collection/Collection">
+                Bộ sưu tập
+            </a>
+
+            <a asp-page="/Offer/Offers">
+                Ưu đãi
+            </a>
+
+            <a asp-page="/Megazine/Megazine">
+                Tạp chí
+            </a>
+
+            <a asp-page="/Showroom/Showroom">
+                Showroom
+            </a>
+
+            <a asp-page="/Contact/Contact">
+                Liên hệ
+            </a>
+        </nav>
+
+        <!-- HEADER ACTIONS -->
+        <div class="header-actions">
+
+            <a asp-page="/Cart/Cart" class="cart-link">
+                Giỏ hàng
+                <span id="cartCount">0</span>
+            </a>
+
+            @if (User.IsInRole("Admin"))
+            {
+                <a href="/Admin" class="admin-entry">Quản trị</a>
+            }
+
+            @if (User.Identity?.IsAuthenticated == true)
+            {
+                <a asp-page="/Account/Profile" class="profile-link">@User.Identity.Name</a>
+                <a asp-page="/Account/Orders" class="profile-link">Đơn hàng</a>
+                <form method="post" asp-page="/Account/Logout" class="logout-form">
+                    <button type="submit" class="logout-link">Đăng xuất</button>
+                </form>
+            }
+            else
+            {
+                <a asp-page="/Account/Login" class="login-link">Đăng nhập</a>
+            }
+
+        </div>
+    </header>
+
+    <!-- PAGE CONTENT -->
+    <main>
+        @RenderBody()
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+
+        <div class="footer-grid">
+
+            <div>
+                <a href="/" class="logo footer-logo">
+                    @brandName
+                </a>
+
+                <p>
+                    Nơi hội tụ những cỗ máy tốc độ dành cho người đam mê
+                    trải nghiệm và phong cách sống khác biệt.
+                </p>
+            </div>
+
+            <div>
+                <h3>KHÁM PHÁ</h3>
+
+                <a asp-page="/Collection/Collection">Bộ sưu tập</a>
+                <a asp-page="/Offer/Offers">Ưu đãi</a>
+                <a asp-page="/Megazine/Megazine">Tạp chí</a>
+            </div>
+
+            <div>
+                <h3>HỖ TRỢ</h3>
+
+                <a asp-page="/Showroom/Showroom">Hệ thống showroom</a>
+                <a asp-page="/Contact/Contact">Liên hệ</a>
+                <a asp-page="/Cart/Cart">Giỏ hàng</a>
+            </div>
+
+            <div>
+                <h3>KẾT NỐI</h3>
+
+                <p>Hotline: @supportPhone</p>
+                <p>Email: @supportEmail</p>
+                @if (User.IsInRole("Admin"))
+                {
+                    <a href="/Admin">Khu vực quản trị</a>
+                }
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+            <p>© 2026 @brandName. ALL RIGHTS RESERVED.</p>
+        </div>
+
+    </footer>
+
+    <!-- JAVASCRIPT -->
+    <script src="~/js/localize.js" asp-append-version="true"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/password-toggle.js" asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+
+</body>
+</html>

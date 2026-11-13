@@ -1,0 +1,85 @@
+@page "/Account/Register"
+@model MyRazorXe_Xemay.Pages.Account.RegisterModel
+
+@{
+    ViewData["Title"] = "Đăng ký tài khoản";
+}
+
+<section class="account-page register-page">
+    <div class="account-decoration">
+        <span class="section-label">JOIN THE COMMUNITY</span>
+        <h2>RIDE YOUR<br /><i>OWN WAY.</i></h2>
+        <p>
+            Trở thành thành viên MOTOHUB và khám phá
+            những trải nghiệm dành riêng cho bạn.
+        </p>
+    </div>
+
+    <div class="login-box">
+        <span class="section-label">BECOME A MEMBER</span>
+
+        <h1>TẠO TÀI KHOẢN</h1>
+
+        <p class="account-description">
+            Điền thông tin bên dưới để đăng ký thành viên MOTOHUB.
+        </p>
+
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="validation-summary"></div>
+            @if (!string.IsNullOrWhiteSpace(Model.ErrorMessage))
+            {
+                <p class="form-error" role="alert">@Model.ErrorMessage</p>
+            }
+            <div class="form-group">
+                <label for="fullName">Họ và tên</label>
+                <input id="fullName"
+                       name="FullName"
+                       type="text"
+                       placeholder="Nhập họ và tên"
+                       autocomplete="name"
+                       required />
+            </div>
+
+            <div class="form-group">
+                <label for="email">Địa chỉ email</label>
+                <input id="email"
+                       name="Email"
+                       type="email"
+                       placeholder="Nhập địa chỉ email"
+                       autocomplete="email"
+                       required />
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Số điện thoại</label>
+                <input id="phone"
+                       name="Phone"
+                       type="tel"
+                       placeholder="Nhập số điện thoại"
+                       autocomplete="tel"
+                       required />
+            </div>
+
+            <div class="form-group">
+                <label for="password">Mật khẩu</label>
+                <div class="password-field"><input id="password" name="Password" type="password" autocomplete="new-password" minlength="8" required /><button class="password-toggle" type="button" data-password-toggle="#password" aria-label="Hi&#7879;n m&#7853;t kh&#7849;u">Hi&#7879;n</button></div>
+            </div>
+
+            <div class="form-group">
+                <label for="confirmPassword">Xác nhận mật khẩu</label>
+                <div class="password-field"><input id="confirmPassword" name="ConfirmPassword" type="password" autocomplete="new-password" minlength="8" required /><button class="password-toggle" type="button" data-password-toggle="#confirmPassword" aria-label="Hi&#7879;n m&#7853;t kh&#7849;u">Hi&#7879;n</button></div>
+            </div>
+
+            <button type="submit" class="btn-gold">
+                ĐĂNG KÝ TÀI KHOẢN
+            </button>
+        </form>
+
+        <p class="account-switch">
+            Bạn đã có tài khoản?
+            <a asp-page="/Account/Login">Đăng nhập ngay</a>
+        </p>
+
+        <a href="/" class="back-home">← QUAY VỀ TRANG CHỦ</a>
+    </div>
+</section>

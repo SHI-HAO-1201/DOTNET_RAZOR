@@ -1,0 +1,77 @@
+@page "/Checkout"
+@model MyRazorXe_Xemay.Pages.Cart.CheckoutModel
+@{
+    ViewData["Title"] = "Đặt hàng";
+}
+
+<section class="page-banner">
+    <span class="section-label">BƯỚC CUỐI CÙNG</span>
+    <h1>THÔNG TIN <i>ĐẶT HÀNG</i></h1>
+    <p>Đơn hàng được lưu và nhân viên sẽ liên hệ xác nhận trước khi giao xe.</p>
+</section>
+
+<section class="section checkout-page" data-order-placed="@(string.IsNullOrWhiteSpace(Model.OrderNumber) ? "false" : "true")">
+    @if (!string.IsNullOrWhiteSpace(Model.OrderNumber))
+    {
+        <p class="form-success" role="status">Đặt hàng thành công! Mã đơn của bạn: <strong>@Model.OrderNumber</strong>. Nhân viên sẽ sớm liên hệ xác nhận.</p>
+        <a asp-page="/Account/Orders" class="btn-gold">Theo dõi đơn hàng</a>
+    }
+
+    <div class="checkout-columns">
+        <div class="login-box">
+            <h2>Thông tin người nhận</h2>
+            <form method="post" id="checkoutForm">
+                <input asp-for="CartJson" type="hidden" id="checkoutCartJson" />
+                <div asp-validation-summary="ModelOnly" class="validation-summary" role="alert"></div>
+                <div class="form-group">
+                    <label asp-for="FullName">Họ và tên</label>
+                    <input asp-for="FullName" autocomplete="name" required />
+                    <span asp-validation-for="FullName" class="form-error"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Phone">Số điện thoại</label>
+                    <input asp-for="Phone" type="tel" autocomplete="tel" required />
+                    <span asp-validation-for="Phone" class="form-error"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Email">Email</label>
+                    <input asp-for="Email" type="email" autocomplete="email" required readonly="@(User.Identity?.IsAuthenticated == true ? "readonly" : null)" />
+                    <span asp-validation-for="Email" class="form-error"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Address">Địa chỉ nhận xe</label>
+                    <input asp-for="Address" autocomplete="street-address" required />
+                    <span asp-validation-for="Address" class="form-error"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PromotionCode">Mã khuyến mãi (không bắt buộc)</label>
+                    <input asp-for="PromotionCode" maxlength="32" />
+                    <span asp-validation-for="PromotionCode" class="form-error"></span>
+                </div>
+                <fieldset class="checkout-payments">
+                    <legend>Phương thức thanh toán</legend>
+                    @if (ViewData["PayOnDeliveryEnabled"] is not false)
+                    {
+                        <label><input asp-for="PaymentMethod" type="radio" value="consult" /> Nhân viên tư vấn thanh toán</label>
+                    }
+                    @if (ViewData["BankTransferEnabled"] is not false)
+                    {
+                        <label><input asp-for="PaymentMethod" type="radio" value="bank" /> Chuyển khoản ngân hàng</label>
+                    }
+                    <span asp-validation-for="PaymentMethod" class="form-error"></span>
+                </fieldset>
+                <button class="btn-gold" type="submit">Gửi đơn đặt xe</button>
+            </form>
+        </div>
+
+        <aside class="login-box checkout-summary">
+            <h2>Đơn hàng của bạn</h2>
+            <div id="checkoutItems" class="checkout-items"></div>
+            <div class="cart-total-row"><span>Tổng cộng</span><strong id="checkoutTotal">0 ₫</strong></div>
+            <a asp-page="/Cart/Cart" class="continue-shopping">← Quay lại giỏ hàng</a>
+            <p class="cart-note">Tồn kho được kiểm tra lại trước khi đơn hàng được xác nhận.</p>
+        </aside>
+    </div>
+</section>
+
+<script src="~/js/checkout.js" asp-append-version="true"></script>

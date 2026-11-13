@@ -1,0 +1,357 @@
+@page "/"
+
+@{
+    ViewData["Title"] = "Trang chủ";
+}
+
+<!-- HERO BANNER -->
+<section class="hero">
+    <div class="hero-overlay"></div>
+
+    <div class="hero-content">
+        <span class="eyebrow">MOTOHUB MOTORCYCLE COLLECTION</span>
+
+        <h1>
+            BORN TO<br />
+            <i>RIDE.</i>
+        </h1>
+
+        <p>
+            Không đơn thuần là một chiếc mô tô.
+            Đó là tuyên ngôn của bản lĩnh, khát vọng chinh phục
+            và phong cách sống của những người đam mê tốc độ.
+        </p>
+
+        <div class="hero-actions">
+            <a asp-page="/Collection/Collection" class="btn-gold">
+                KHÁM PHÁ BỘ SƯU TẬP
+            </a>
+
+            <a asp-page="/Showroom/Showroom" class="btn-outline">
+                TRẢI NGHIỆM TẠI SHOWROOM →
+            </a>
+        </div>
+    </div>
+
+    <div class="hero-bottom">
+        <span>ENGINEERED FOR PASSION</span>
+        <span>BUILT FOR THE RIDE</span>
+    </div>
+</section>
+
+
+<!-- GIÁ TRỊ MOTOHUB -->
+<section class="benefits">
+
+    <div>
+        <strong>01</strong>
+        <div>
+            <b>SẢN PHẨM CHÍNH HÃNG</b>
+            <small>Nguồn gốc và thông tin minh bạch</small>
+        </div>
+    </div>
+
+    <div>
+        <strong>02</strong>
+        <div>
+            <b>CHẤT LƯỢNG ĐẢM BẢO</b>
+            <small>Kiểm tra kỹ lưỡng trước bàn giao</small>
+        </div>
+    </div>
+
+    <div>
+        <strong>03</strong>
+        <div>
+            <b>TƯ VẤN CHUYÊN NGHIỆP</b>
+            <small>Lựa chọn xe phù hợp nhu cầu</small>
+        </div>
+    </div>
+
+    <div>
+        <strong>04</strong>
+        <div>
+            <b>ĐỒNG HÀNH DÀI LÂU</b>
+            <small>Hỗ trợ trong suốt quá trình sử dụng</small>
+        </div>
+    </div>
+
+</section>
+
+
+<!-- XE NỔI BẬT -->
+<section class="section featured">
+
+    <div class="section-heading">
+        <div>
+            <span class="section-label">THE MOTOHUB COLLECTION</span>
+            <h2>NHỮNG CỖ MÁY <i>ẤN TƯỢNG</i></h2>
+            <p>
+                Khám phá những mẫu mô tô nổi bật dành cho người yêu tốc độ.
+            </p>
+        </div>
+
+        <a asp-page="/Collection/Collection" class="view-all">
+            KHÁM PHÁ TẤT CẢ →
+        </a>
+    </div>
+
+    <div class="products">
+
+        <!-- YAMAHA R1 -->
+        <article class="product-card">
+            <div class="product-image">
+                <span class="product-badge">SUPERSPORT</span>
+                <img src="https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?auto=format&amp;fit=crop&amp;w=1000&amp;q=85"
+                     alt="Yamaha YZF-R1" />
+            </div>
+
+            <div class="product-info">
+                <small>YAMAHA · SUPERSPORT</small>
+                <h3>YZF-R1</h3>
+                <p>
+                    Thiết kế khí động học cùng tinh thần đường đua.
+                </p>
+
+                <div class="product-footer">
+                    <strong>Liên hệ báo giá</strong>
+                    <a asp-page="/Collection/Collection" class="detail">
+                        CHI TIẾT →
+                    </a>
+                </div>
+            </div>
+        </article>
+
+
+        <!-- KAWASAKI ZX10R -->
+        <article class="product-card">
+            <div class="product-image">
+                <span class="product-badge">SUPERSPORT</span>
+                <img src="https://images.unsplash.com/photo-1558981403-c5f9899a28bc?auto=format&amp;fit=crop&amp;w=1000&amp;q=85"
+                     alt="Kawasaki Ninja ZX-10R" />
+            </div>
+
+            <div class="product-info">
+                <small>KAWASAKI · SUPERSPORT</small>
+                <h3>Ninja ZX-10R</h3>
+                <p>
+                    Sức mạnh đặc trưng từ dòng mô tô thể thao Kawasaki.
+                </p>
+
+                <div class="product-footer">
+                    <strong>Liên hệ báo giá</strong>
+                    <a asp-page="/Collection/Collection" class="detail">
+                        CHI TIẾT →
+                    </a>
+                </div>
+            </div>
+        </article>
+
+
+        <!-- BMW S1000RR -->
+        <article class="product-card">
+            <div class="product-image">
+                <span class="product-badge">PREMIUM</span>
+                <img src="https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&amp;fit=crop&amp;w=1000&amp;q=85"
+                     alt="BMW S1000RR" />
+            </div>
+
+            <div class="product-info">
+                <small>BMW MOTORRAD · SUPERSPORT</small>
+                <h3>S1000RR</h3>
+                <p>
+                    Sự kết hợp giữa công nghệ, hiệu suất và thiết kế.
+                </p>
+
+                <div class="product-footer">
+                    <strong>Liên hệ báo giá</strong>
+                    <a asp-page="/Collection/Collection" class="detail">
+                        CHI TIẾT →
+                    </a>
+                </div>
+            </div>
+        </article>
+
+    </div>
+</section>
+
+
+<!-- GIỚI THIỆU THƯƠNG HIỆU -->
+<section class="brand-story">
+
+    <div class="brand-story-image">
+        <img src="https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&amp;fit=crop&amp;w=1400&amp;q=85"
+             alt="Không gian và tinh thần MOTOHUB" />
+    </div>
+
+    <div class="brand-story-content">
+        <span class="section-label">BEYOND THE MACHINE</span>
+
+        <h2>
+            MORE THAN<br />
+            <i>A MACHINE.</i>
+        </h2>
+
+        <p>
+            Với MOTOHUB, mô tô không chỉ là phương tiện di chuyển.
+            Mỗi chiếc xe đại diện cho cá tính, niềm đam mê
+            và khát vọng khám phá những giới hạn mới.
+        </p>
+
+        <p>
+            Chúng tôi hướng đến việc mang lại trải nghiệm lựa chọn,
+            sở hữu và đồng hành cùng chiếc xe một cách trọn vẹn.
+        </p>
+
+        <a asp-page="/Showroom/Showroom" class="btn-gold">
+            KHÁM PHÁ MOTOHUB
+        </a>
+    </div>
+
+</section>
+
+
+<!-- THƯƠNG HIỆU -->
+<section class="brand-section">
+
+    <div class="section">
+        <span class="section-label">THE BRANDS WE ADMIRE</span>
+
+        <h2>
+            NHỮNG BIỂU TƯỢNG <i>TỐC ĐỘ</i>
+        </h2>
+
+        <p>
+            Hội tụ những thương hiệu mô tô được yêu thích trên thế giới.
+        </p>
+
+        <div class="brand-list">
+            <span>YAMAHA</span>
+            <span>KAWASAKI</span>
+            <span>BMW MOTORRAD</span>
+            <span>DUCATI</span>
+            <span>HONDA</span>
+        </div>
+    </div>
+
+</section>
+
+
+<!-- CHƯƠNG TRÌNH ƯU ĐÃI -->
+<section class="promotion">
+
+    <div class="promotion-image"></div>
+
+    <div class="promotion-content">
+        <span class="section-label">EXCLUSIVE PRIVILEGES</span>
+
+        <h2>
+            YOUR PASSION.<br />
+            <i>YOUR PRIVILEGE.</i>
+        </h2>
+
+        <p>
+            Khám phá những chương trình ưu đãi và đặc quyền
+            dành cho khách hàng tại MOTOHUB.
+        </p>
+
+        <a asp-page="/Offer/Offers" class="btn-gold">
+            KHÁM PHÁ ƯU ĐÃI
+        </a>
+    </div>
+
+</section>
+
+
+<!-- TẠP CHÍ -->
+<section class="magazine section">
+
+    <div class="section-heading">
+        <div>
+            <span class="section-label">MOTOHUB JOURNAL</span>
+            <h2>THẾ GIỚI <i>MÔ TÔ</i></h2>
+            <p>
+                Tin tức, kiến thức và cảm hứng dành cho cộng đồng biker.
+            </p>
+        </div>
+
+        <a asp-page="/Magazine/Magazine" class="view-all">
+            XEM TẤT CẢ BÀI VIẾT →
+        </a>
+    </div>
+
+    <div class="magazine-grid">
+
+        <article>
+            <img src="https://images.unsplash.com/photo-1558981403-c5f9899a28bc?auto=format&amp;fit=crop&amp;w=900&amp;q=85"
+                 alt="Kinh nghiệm chọn mô tô phân khối lớn" />
+
+            <small>KIẾN THỨC · MÔ TÔ</small>
+
+            <h3>
+                Những điều cần biết trước khi chọn mua mô tô phân khối lớn
+            </h3>
+
+            <a asp-page="/Magazine/Magazine">
+                ĐỌC BÀI VIẾT →
+            </a>
+        </article>
+
+
+        <article>
+            <img src="https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?auto=format&amp;fit=crop&amp;w=900&amp;q=85"
+                 alt="Đánh giá các mẫu Superbike" />
+
+            <small>ĐÁNH GIÁ · SUPERRBIKE</small>
+
+            <h3>
+                Khám phá sức mạnh và công nghệ trên những mẫu Superbike
+            </h3>
+
+            <a asp-page="/Magazine/Magazine">
+                ĐỌC BÀI VIẾT →
+            </a>
+        </article>
+
+
+        <article>
+            <img src="https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&amp;fit=crop&amp;w=900&amp;q=85"
+                 alt="Phong cách sống biker" />
+
+            <small>PHONG CÁCH · BIKER</small>
+
+            <h3>
+                Bản lĩnh và tự do: Tinh thần phía sau mỗi hành trình
+            </h3>
+
+            <a asp-page="/Magazine/Magazine">
+                ĐỌC BÀI VIẾT →
+            </a>
+        </article>
+
+    </div>
+
+</section>
+
+
+<!-- SHOWROOM -->
+<section class="showroom">
+
+    <div class="showroom-content">
+        <span class="section-label">EXPERIENCE THE DIFFERENCE</span>
+
+        <h2>
+            FEEL THE<br />
+            <i>POWER.</i>
+        </h2>
+
+        <p>
+            Không gì tuyệt vời hơn việc trực tiếp chiêm ngưỡng,
+            khám phá và cảm nhận chiếc mô tô bạn yêu thích.
+        </p>
+
+        <a asp-page="/Showroom/Showroom" class="btn-gold">
+            TÌM SHOWROOM GẦN BẠN
+        </a>
+    </div>
+
+</section>

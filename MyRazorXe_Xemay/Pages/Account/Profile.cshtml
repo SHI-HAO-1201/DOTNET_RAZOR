@@ -1,0 +1,56 @@
+@page "/Account/Profile"
+@model MyRazorXe_Xemay.Pages.Account.ProfileModel
+@{
+    ViewData["Title"] = "Tài khoản của tôi";
+}
+
+<section class="account-page profile-page">
+    <div class="account-decoration">
+        <span class="section-label">MOTOHUB MEMBER</span>
+        <h2>HỒ SƠ<br /><i>CỦA BẠN.</i></h2>
+        <p>Thông tin tài khoản MOTOHUB của bạn.</p>
+    </div>
+    <div class="login-box profile-card">
+        <span class="section-label">THÔNG TIN THÀNH VIÊN</span>
+        <h1>@Model.FullName</h1>
+        @if (TempData["ProfileSuccess"] is string successMessage)
+        {
+            <p class="form-success" role="status">@successMessage</p>
+        }
+        @if (!string.IsNullOrWhiteSpace(Model.ErrorMessage))
+        {
+            <p class="form-error" role="alert">@Model.ErrorMessage</p>
+        }
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="validation-summary"></div>
+            <div class="form-group">
+                <label asp-for="FullName">Họ và tên</label>
+                <input asp-for="FullName" autocomplete="name" required />
+                <span asp-validation-for="FullName" class="form-error"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Phone">Số điện thoại</label>
+                <input asp-for="Phone" type="tel" autocomplete="tel" />
+                <span asp-validation-for="Phone" class="form-error"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Address">Địa chỉ nhận xe</label>
+                <input asp-for="Address" autocomplete="street-address" maxlength="240" />
+                <span asp-validation-for="Address" class="form-error"></span>
+            </div>
+            <div class="form-group">
+                <label>Địa chỉ email</label>
+                <input value="@Model.Email" type="email" readonly />
+                <small>Email tài khoản hiện chưa thể thay đổi.</small>
+            </div>
+            <div class="form-group">
+                <label>Ngày tham gia</label>
+                <input value="@Model.CreatedUtc.ToLocalTime().ToString("dd/MM/yyyy")" readonly />
+            </div>
+            <button type="submit" class="btn-gold profile-browse">Lưu thay đổi</button>
+        </form>
+        <a asp-page="/Collection/Collection" class="btn-gold profile-browse">Khám phá bộ sưu tập</a>
+        <a asp-page="/Account/Orders" class="profile-browse">Xem đơn hàng của tôi</a>
+        <form method="post" asp-page="/Account/Logout"><button type="submit" class="profile-logout">Đăng xuất</button></form>
+    </div>
+</section>

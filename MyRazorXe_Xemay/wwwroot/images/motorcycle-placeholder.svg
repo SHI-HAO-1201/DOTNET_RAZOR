@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-labelledby="title">
+  <title id="title">Ảnh mô tô đang cập nhật</title>
+  <rect width="1200" height="800" fill="#20211f"/>
+  <path d="M0 620h1200v180H0z" fill="#171816"/>
+  <circle cx="385" cy="570" r="92" fill="none" stroke="#c9ad76" stroke-width="18"/>
+  <circle cx="820" cy="570" r="92" fill="none" stroke="#c9ad76" stroke-width="18"/>
+  <path d="m385 570 160-160 105 0 170 160M545 410l-75 160m180-160 40-70h120l110 130M525 410l-40-70h-95" fill="none" stroke="#c9ad76" stroke-linecap="round" stroke-linejoin="round" stroke-width="22"/>
+  <text x="600" y="745" fill="#e6d2a6" font-family="Georgia,serif" font-size="30" text-anchor="middle" letter-spacing="5">MOTOHUB</text>
+</svg>

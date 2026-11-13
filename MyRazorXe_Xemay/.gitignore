@@ -1,0 +1,5 @@
+App_Data/accounts.json
+App_Data/keys/
+bin/
+obj/
+.vs/
