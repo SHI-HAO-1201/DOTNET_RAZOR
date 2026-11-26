@@ -2,8 +2,9 @@
 
 `AppDbContext`, các migration và model xe dùng Entity Framework Core với SQL
 Server. Cả MyRazorXe_Xemay, MyMvcApp và BlazorXe_may đang cấu hình cùng
-database `MotoSpeedDb` trên máy chủ `localhost`; thông tin đăng nhập nằm trong
-User Secrets, không nằm trong source code.
+database `MotoSpeedDb` trên máy chủ `localhost`. Project Razor hiện đọc
+connection string từ `appsettings.json`; các project còn lại có thể lưu cấu
+hình riêng trong User Secrets.
 
 ## Migrations và an toàn dữ liệu
 
@@ -12,8 +13,9 @@ migration chưa có trong `__EFMigrationsHistory`; MyRazor đã được khởi 
 xác nhận database hiện có đủ migration, không cần tạo lại database. Không dùng
 `EnsureDeleted`, `EnsureCreated` hoặc xóa database để cập nhật schema.
 
-Để kiểm tra cấu hình EF trước khi chạy `dotnet ef`, xem User Secrets của project
-hoặc chạy `dotnet user-secrets list`. Không đưa mật khẩu vào `appsettings.json`.
+Để kiểm tra cấu hình EF trước khi chạy lệnh database, xem `appsettings.json` và
+User Secrets của project vì User Secrets hoặc biến môi trường có thể ghi đè cấu
+hình trong file.
 
 ## Dữ liệu xe và ảnh
 
@@ -27,8 +29,9 @@ hoặc chạy `dotnet user-secrets list`. Không đưa mật khẩu vào `appset
   không còn cho sửa các trường này. Trường mô tả lưu vào `MoTa`.
 - Migration `UseSharedXeMays` nhập các mã xe còn thiếu, chuyển khóa ngoại của
   đơn hàng/đánh giá/yêu cầu liên hệ theo mã xe và bỏ trigger đồng bộ hai bảng.
-  Migration giữ nguyên `dbo.Motorcycles` làm dữ liệu lưu trữ cũ; các ứng dụng
-  không còn đọc hoặc ghi bảng đó.
+  Migration `RemoveLegacyMotorcycles` kiểm tra mọi mã xe trong `dbo.Motorcycles`
+  đã có ở `dbo.XeMays` rồi mới xóa bảng cũ. Nếu còn mã chưa chuyển, migration
+  dừng và giữ nguyên bảng. Ứng dụng hiện dùng `dbo.XeMays` làm nguồn xe.
 - Nhập URL ảnh ở trang quản trị. Database lưu URL trong `HinhAnh`; nếu dùng ảnh
   cục bộ, lưu file trong `wwwroot/images` và đường dẫn `/images/ten-anh.jpg`.
 
