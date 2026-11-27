@@ -198,3 +198,35 @@ Nếu chạy project ở máy/môi trường khác, đặt lại secret hoặc c
 - Các link tạp chí trên trang chủ đã được đồng bộ thành `/Megazine/Megazine` theo đúng thư mục/file `Pages/Megazine/Megazine.cshtml`.
 - Để thêm nút mới: markup `.cshtml` → chọn Page handler nếu submit trang hoặc selector JS nếu cần tương tác → thêm endpoint trong `Program.cs` nếu cần API → cập nhật model/DbContext/migration khi schema thay đổi → cập nhật bảng tương ứng trong tài liệu này.
 
+
+## Bảng vị trí từng nút trên web với đường dẫn đầy đủ
+
+Gốc project là `D:\Hào Lê code\DOTNET\RAZOR\DOTNET_RAZOR\MyRazorXe_Xemay\`. Mỗi ô dưới đây ghi đường dẫn đầy đủ tới file chứa nút; nếu nút được JavaScript tạo động, mình ghi cả file chứa phần tử và file tạo/bắt sự kiện.
+
+| Nút/thao tác | File chứa nút (đường dẫn đầy đủ) | Luồng xử lý tiếp theo |
+|---|---|---|
+| Logo, Trang chủ, Bộ sưu tập, Ưu đãi, Tạp chí, Showroom, Liên hệ, Giỏ hàng, link tài khoản và Đăng xuất | `D:\Hào Lê code\DOTNET\RAZOR\DOTNET_RAZOR\MyRazorXe_Xemay\Pages\Shared\_Layout.cshtml` | Link `asp-page` điều hướng sang Razor Page; Đăng xuất POST tới `/Account/Logout` → `Pages\Account\Logout.cshtml.cs`. |
+| Mở/đóng menu điện thoại | `D:\Hào Lê code\DOTNET\RAZOR\DOTNET_RAZOR\MyRazorXe_Xemay\Pages\Shared\_Layout.cshtml` | `wwwroot\js\site.js` bắt nút menu và đổi trạng thái hiển thị; không gọi server. |
+| Nút “Khám phá bộ sưu tập”, “Xem xe”, “Xem ưu đãi”, bài tạp chí trên trang chủ | `D:\Hào Lê code\DOTNET\RAZOR\DOTNET_RAZOR\MyRazorXe_Xemay\Pages\Dashboard\Index.cshtml` | Các link `asp-page` chuyển sang Collection, Showroom, Offer hoặc Megazine; không phải API. |
+| Tìm/lọc/sắp xếp xe | `D:\Hào Lê code\DOTNET\RAZOR\DOTNET_RAZOR\MyRazorXe_Xemay\Pages\Collection\Collection.cshtml` | `wwwroot\js\collection.js` lọc/sắp xếp các xe đã render ở trình duyệt; tải danh sách ban đầu do `Collection.cshtml.cs.OnGetAsync()` đọc SQL. |
+| Nút “TƯ VẤN” trên từng xe | `D:\Hào Lê code\DOTNET\RAZOR\DOTNET_RAZOR\MyRazorXe_Xemay\Pages\Collection\Collection.cshtml` | Chuyển sang `Pages\Contact\Contact.cshtml`; form liên hệ hiện demo, chưa lưu database. |
+| Nút “Thêm xe vào giỏ” ở bộ sưu tập | `D:\Hào Lê code\DOTNET\RAZOR\DOTNET_RAZOR\MyRazorXe_Xemay\Pages\Collection\Collection.cshtml` | `wwwroot\js\site.js` bắt `.add-cart`, ghi xe vào `localStorage`; chưa tạo đơn và chưa gọi API ghi SQL. |
+| Tăng/giảm số lượng, xóa xe khỏi giỏ | Vùng giỏ trong `D:\Hào Lê code\DOTNET\RAZOR\DOTNET_RAZOR\MyRazorXe_Xemay\Pages\Cart\Cart.cshtml`; các nút được tạo động tại `D:\Hào Lê code\DOTNET\RAZOR\DOTNET_RAZOR\MyRazorXe_Xemay\wwwroot\js\site.js` | `site.js` cập nhật `localStorage`, tính lại tổng tiền và render giỏ; không ghi đơn. |
+| Nút “Tiến hành đặt hàng” | `D:\Hào Lê code\DOTNET\RAZOR\DOTNET_RAZOR\MyRazorXe_Xemay\Pages\Cart\Cart.cshtml` | `site.js` chuyển tới `/Cart/Checkout`. |
+| Nút “Gửi đơn đặt xe” | `D:\Hào Lê code\DOTNET\RAZOR\DOTNET_RAZOR\MyRazorXe_Xemay\Pages\Cart\Checkout.cshtml` | POST → `Pages\Cart\Checkout.cshtml.cs.OnPostAsync()` → kiểm tra sản phẩm, tồn kho, khuyến mãi; ghi khách hàng/đơn/chi tiết và cập nhật tồn kho qua EF Core. `checkout.js` chuẩn bị phần hiển thị giỏ trước khi gửi. |
+| Nút Đăng nhập và nút hiện/ẩn mật khẩu | `D:\Hào Lê code\DOTNET\RAZOR\DOTNET_RAZOR\MyRazorXe_Xemay\Pages\Account\Login.cshtml` | Form POST → `Login.cshtml.cs.OnPostAsync()`; nút hiện mật khẩu gọi `wwwroot\js\password-toggle.js`, chỉ đổi cách hiển thị input. |
+| Nút Đăng ký và hiện/ẩn mật khẩu | `D:\Hào Lê code\DOTNET\RAZOR\DOTNET_RAZOR\MyRazorXe_Xemay\Pages\Account\Register.cshtml` | POST → `Register.cshtml.cs.OnPostAsync()` → `AccountStore`; nút hiện mật khẩu gọi `password-toggle.js`. |
+| Nút “Lưu thay đổi” hồ sơ và Đăng xuất | `D:\Hào Lê code\DOTNET\RAZOR\DOTNET_RAZOR\MyRazorXe_Xemay\Pages\Account\Profile.cshtml` | POST hồ sơ → `Profile.cshtml.cs.OnPostAsync()`; form đăng xuất POST → `Logout.cshtml.cs`. |
+| Nút “Gửi yêu cầu khôi phục” | `D:\Hào Lê code\DOTNET\RAZOR\DOTNET_RAZOR\MyRazorXe_Xemay\Pages\Account\ForgotPassword.cshtml` | JavaScript `wwwroot\js\site.js` chặn submit và hiện thông báo demo; chưa có API gửi email/reset mật khẩu. |
+| Nút gửi form Liên hệ | `D:\Hào Lê code\DOTNET\RAZOR\DOTNET_RAZOR\MyRazorXe_Xemay\Pages\Contact\Contact.cshtml` | `site.js` chặn submit và báo demo; chưa lưu SQL. |
+| Nút sao chép mã ưu đãi | `D:\Hào Lê code\DOTNET\RAZOR\DOTNET_RAZOR\MyRazorXe_Xemay\Pages\Offer\Offers.cshtml` | `site.js` bắt `.copy-voucher`, chép mã vào clipboard; không gọi server. |
+| Các tab quản trị Tổng quan/Sản phẩm/Đơn hàng/Khách hàng/Ưu đãi/Nội dung/Báo cáo/Cài đặt | `D:\Hào Lê code\DOTNET\RAZOR\DOTNET_RAZOR\MyRazorXe_Xemay\Pages\Admin\Admin.cshtml` | `wwwroot\js\admin.js` đổi panel trong cùng trang; không chuyển Page. |
+| Nút “Thêm sản phẩm”, mở/sửa dialog, nút Lưu sản phẩm | Phần dialog và nút tĩnh nằm ở `D:\Hào Lê code\DOTNET\RAZOR\DOTNET_RAZOR\MyRazorXe_Xemay\Pages\Admin\Admin.cshtml`; các nút sửa/ẩn trong bảng được tạo tại `D:\Hào Lê code\DOTNET\RAZOR\DOTNET_RAZOR\MyRazorXe_Xemay\wwwroot\js\admin.js` | `admin.js` gửi POST `/api/admin/products` trong `Program.cs`; `Id=0` thêm mới, `Id>0` cập nhật xe trong SQL. Đây là nút quản trị lưu sản phẩm thật. |
+| Nút “Tải danh sách CSV” sản phẩm | `D:\Hào Lê code\DOTNET\RAZOR\DOTNET_RAZOR\MyRazorXe_Xemay\Pages\Admin\Admin.cshtml` | `admin.js` điều hướng GET `/api/admin/products/export` → endpoint trong `Program.cs` trả CSV. |
+| Nút Thêm/Sửa/Xóa khách hàng | Nút mở dialog nằm tại `D:\Hào Lê code\DOTNET\RAZOR\DOTNET_RAZOR\MyRazorXe_Xemay\Pages\Admin\Admin.cshtml`; nút Sửa/Xóa từng dòng được tạo tại `D:\Hào Lê code\DOTNET\RAZOR\DOTNET_RAZOR\MyRazorXe_Xemay\wwwroot\js\admin.js` | `admin.js` gọi POST `/api/admin/customers` để thêm/sửa và DELETE `/api/admin/customers/{id}` để xóa; endpoint trong `Program.cs`. |
+| Nút Tạo/Tạm dừng ưu đãi | Nút Tạo trong `D:\Hào Lê code\DOTNET\RAZOR\DOTNET_RAZOR\MyRazorXe_Xemay\Pages\Admin\Admin.cshtml`; nút trạng thái trong card được tạo ở `D:\Hào Lê code\DOTNET\RAZOR\DOTNET_RAZOR\MyRazorXe_Xemay\wwwroot\js\admin.js` | POST `/api/admin/promotions` hoặc PATCH `/api/admin/promotions/{id}` trong `Program.cs`. |
+| Nút Cập nhật trạng thái/Xóa đơn | `D:\Hào Lê code\DOTNET\RAZOR\DOTNET_RAZOR\MyRazorXe_Xemay\Pages\Admin\Admin.cshtml` (vùng bảng); hàng và nút được render trong `D:\Hào Lê code\DOTNET\RAZOR\DOTNET_RAZOR\MyRazorXe_Xemay\wwwroot\js\admin.js` | PUT `/api/admin/orders/{id}/status` hoặc DELETE `/api/admin/orders/{id}` trong `Program.cs`; cập nhật trạng thái và tồn kho. |
+| Nút “Lưu nội dung” và “Lưu cài đặt” | `D:\Hào Lê code\DOTNET\RAZOR\DOTNET_RAZOR\MyRazorXe_Xemay\Pages\Admin\Admin.cshtml` | `admin.js` gửi PUT `/api/admin/settings` → `Program.cs` lưu `StoreSettings`. |
+| Nút “Tải báo cáo CSV” | `D:\Hào Lê code\DOTNET\RAZOR\DOTNET_RAZOR\MyRazorXe_Xemay\Pages\Admin\Admin.cshtml` | `admin.js` tạo/tải CSV từ dữ liệu đã nạp trên trình duyệt; hiện không có endpoint export report riêng. |
+
+> **Phân biệt nhanh:** “Thêm xe vào giỏ” nằm tại `Pages\Collection\Collection.cshtml` và chỉ lưu localStorage. “Thêm sản phẩm vào kho” nằm ở dialog admin tại `Pages\Admin\Admin.cshtml`, được xử lý bởi `wwwroot\js\admin.js` → POST `/api/admin/products` → `Program.cs` → SQL.
